@@ -13,10 +13,8 @@ def tshap_window_explanation_pi(fnc, input_sample, baselines, window_length = 20
     
     all_samples = np.array([input_sample])
     sl = input_sample.shape[-1]
-    fs_exp = np.zeros(input_sample.shape)
-    wd_pos = [ws for ws in range(0, sl-window_length + stride,stride)]
-    wd_scores = np.zeros(len(wd_pos))
-    #wd_scores = np.zeros(input_sample.shape)
+    
+    wd_pos = [ws for ws in range(0, sl-window_length + stride,stride)]    
     bsize = len(baselines)
     
     all_samples = np.vstack((all_samples, baselines))
@@ -163,7 +161,7 @@ def tshap_explanation_single_instance(fnc, input_sample, baselines, window_lengt
 
 def tshap_explanation(fnc, X, baselines, window_length = 20, stride = 5, roi = True):
     if fnc.__name__ == 'predict_proba':
-        final_fnc = lambda X: fnc(X)[:,0]
+        final_fnc = lambda X: fnc(X)[:,1] # probability of positive class
     else:
         final_fnc = fnc
         
